@@ -1,0 +1,8 @@
+{
+  "name": "Coach extension",
+  "type": "helper",
+  "properties": {
+    "user_type": "all",
+    "component": "assignment"
+  }
+}
