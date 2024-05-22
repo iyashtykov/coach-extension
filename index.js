@@ -11,3 +11,4 @@ window.codioIDE.coachBot.register('customButtonId', 'try new api', () => {
 
         window.codioIDE.coachBot.ask({userPrompt: input, systemPrompt: 'explain user defined error'})
     })
+})
