@@ -41,3 +41,17 @@ window.codioIDE.coachBot.register('analyseBtnId', 'Analyse history and what next
     console.log('coach bot error on ask', e.message)
   }
 })
+window.codioIDE.coachBot.register('preventmenuandshowment', 'prevent menu and show menu', async () => {
+  window.codioIDE.coachBot.showButton('click to ask', async () => {
+    const input = await window.codioIDE.coachBot.input('please type hook name')
+    const resultStream = await window.codioIDE.coachBot.ask(
+      {userPrompt: input, systemPrompt: 'get react hook docs for user provided hook'},
+      {stream: true, preventMenu: true} // don't show menu buttons after bot answer
+    )
+    console.log('resultStream', resultStream)
+
+    setTimeout(() => {
+      window.codioIDE.coachBot.showMenu() // show menu buttons after 5 sec later 
+    }, 5000)
+  })
+})
