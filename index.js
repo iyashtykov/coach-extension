@@ -55,3 +55,52 @@ window.codioIDE.coachBot.register('preventmenuandshowment', 'prevent menu and sh
     }, 5000)
   })
 })
+
+window.codioIDE.coachBot.register('showllmproxydetails', 'show llm proxy details', async () => {
+    const llm = await window.codioIDE.coachBot.getLlmProxyDetails()
+    console.log('llm', {llm})
+    for (let i = 0; i < llm.length; i++) {
+        window.codioIDE.coachBot.write('provider: ' + llm[i].provider)
+        window.codioIDE.coachBot.write('url: ' + llm[i].endpoint)
+        window.codioIDE.coachBot.write('key: ' + llm[i].key)
+    }
+    setTimeout(() => {
+      window.codioIDE.coachBot.showMenu()
+    }, 3000)
+})
+
+window.codioIDE.coachBot.register('askopenaillmproxy', 'ask Openai llm proxy', async () => {
+    const input = await window.codioIDE.coachBot.input('please type hook name')
+    const llmProxyAnswer = await window.codioIDE.coachBot.ask(
+        {userPrompt: input, systemPrompt: 'get react hook docs for user provided hook'},
+        {stream: true, preventMenu: true,
+            proxy: {
+                model: 'gpt-4o',
+                provider: 'openai'
+            }
+        } 
+    )
+    console.log('llmProxyAnswer', {llmProxyAnswer})
+
+    setTimeout(() => {
+      window.codioIDE.coachBot.showMenu()
+    }, 3000)
+})
+
+window.codioIDE.coachBot.register('askanthropicllmproxy', 'ask Anthropic llm proxy', async () => {
+    const input = await window.codioIDE.coachBot.input('please type hook name')
+    const llmProxyAnswer = await window.codioIDE.coachBot.ask(
+        {userPrompt: input, systemPrompt: 'get react hook docs for user provided hook'},
+        {stream: true, preventMenu: true, 
+            proxy: {
+                model: 'claude-3-5-sonnet-20240620',
+                provider: 'anthropic' 
+            }
+        } 
+    )
+    console.log('llmProxyAnswer', {llmProxyAnswer})
+
+    setTimeout(() => {
+      window.codioIDE.coachBot.showMenu()
+    }, 3000)
+})
