@@ -19,11 +19,27 @@ window.codioIDE.coachBot.register('level1button', 'level1 button', () => {
         
     })    
 })
+
 window.codioIDE.coachBot.register('level1input', 'level1 input', async () => {
     const input = await window.codioIDE.coachBot.input('enter input value')
     window.codioIDE.coachBot.write('Please wait in level1...')
-    window.codioIDE.coachBot.ask({userPrompt: input, systemPrompt: 'show input'})
+    window.codioIDE.coachBot.ask(
+      {
+        userPrompt: input, 
+        systemPrompt: 'get react hook docs for user provided hook'
+      },
+      {
+        stream:true, 
+        preventMenu: false,
+        modelSettings: {
+          maxTokens: 1024,
+          temperature: 1,
+          apiVersion: 3
+        }
+      }
+    )
 })
+
 window.codioIDE.coachBot.register('analyseBtnId', 'Analyse history and what next', async () => {
   const messages = await window.codioIDE.coachBot.getHistory()
   console.log(messages)
@@ -72,12 +88,22 @@ window.codioIDE.coachBot.register('showllmproxydetails', 'show llm proxy details
 window.codioIDE.coachBot.register('askopenaillmproxy', 'ask Openai llm proxy', async () => {
     const input = await window.codioIDE.coachBot.input('please type hook name')
     const llmProxyAnswer = await window.codioIDE.coachBot.ask(
-        {userPrompt: input, systemPrompt: 'get react hook docs for user provided hook'},
-        {stream: true, preventMenu: true,
-            proxy: {
-                model: 'gpt-4o',
-                provider: 'openai'
-            }
+        {
+          userPrompt: input, 
+          systemPrompt: 'get react hook docs for user provided hook'
+        },
+        {
+          stream: true, 
+          preventMenu: true,
+          modelSettings: {
+            maxTokens: 1024,
+            temperature: 1,
+            apiVersion: 3
+          },
+          proxy: {
+            model: 'gpt-4o',
+            provider: 'openai'
+          }
         } 
     )
     console.log('llmProxyAnswer', {llmProxyAnswer})
@@ -90,12 +116,22 @@ window.codioIDE.coachBot.register('askopenaillmproxy', 'ask Openai llm proxy', a
 window.codioIDE.coachBot.register('askanthropicllmproxy', 'ask Anthropic llm proxy', async () => {
     const input = await window.codioIDE.coachBot.input('please type hook name')
     const llmProxyAnswer = await window.codioIDE.coachBot.ask(
-        {userPrompt: input, systemPrompt: 'get react hook docs for user provided hook'},
-        {stream: true, preventMenu: true, 
-            proxy: {
-                model: 'claude-3-5-sonnet-20240620',
-                provider: 'anthropic' 
-            }
+        {
+          userPrompt: input, 
+          systemPrompt: 'get react hook docs for user provided hook'
+        },
+        {
+          stream: true, 
+          preventMenu: true,
+          modelSettings: {
+            maxTokens: 1024,
+            temperature: 1,
+            apiVersion: 3
+          }, 
+          proxy: {
+            model: 'claude-3-5-sonnet-20240620',
+            provider: 'anthropic' 
+          }
         } 
     )
     console.log('llmProxyAnswer', {llmProxyAnswer})
