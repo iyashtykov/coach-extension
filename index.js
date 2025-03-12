@@ -8,7 +8,7 @@ window.codioIDE.coachBot.register('level1button', 'level1 button', () => {
         window.codioIDE.coachBot.ask({userPrompt: 'python indention', systemPrompt: 'show react hook documentation for user provided hook'})
     })
     window.codioIDE.coachBot.showButton('level2 button', async () => {
-        window.codioIDE.coachBot.showButton('level3 button', async() => {
+        window.codioIDE.coachBot.showButton('level3 button promt', async() => {
             window.codioIDE.coachBot.ask({userPrompt: 'java indention', systemPrompt: 'show react hook documentation for user provided hook'})
         })
         window.codioIDE.coachBot.showButton('level3 input', async () => {
