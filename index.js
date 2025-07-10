@@ -21,6 +21,9 @@ window.codioIDE.coachBot.register('level1button', 'level1 button', () => {
 })
 
 window.codioIDE.coachBot.register('level1input', 'level1 input', async () => {
+    window.codioIDE.coachBot.showThinkingAnimation()
+    await new Promise(r => setTimeout(r, 1000));
+    window.codioIDE.coachBot.hideThinkingAnimation()
     const input = await window.codioIDE.coachBot.input('enter input value')
     window.codioIDE.coachBot.write('Please wait in level1...')
     window.codioIDE.coachBot.ask(
@@ -86,15 +89,19 @@ window.codioIDE.coachBot.register('showllmproxydetails', 'show llm proxy details
 })
 
 window.codioIDE.coachBot.register('askopenaillmproxy', 'ask Openai llm proxy', async () => {
+    window.codioIDE.coachBot.showThinkingAnimation()
+    await new Promise(r => setTimeout(r, 1000));
+    window.codioIDE.coachBot.hideThinkingAnimation()
     const input = await window.codioIDE.coachBot.input('please type hook name')
+    window.codioIDE.coachBot.showThinkingAnimation()
     const llmProxyAnswer = await window.codioIDE.coachBot.ask(
         {
           userPrompt: input, 
           systemPrompt: 'get react hook docs for user provided hook'
         },
         {
-          stream: true, 
-          preventMenu: true,
+          stream: false, 
+          preventMenu: false,
           modelSettings: {
             maxTokens: 1024,
             temperature: 1,
@@ -107,6 +114,8 @@ window.codioIDE.coachBot.register('askopenaillmproxy', 'ask Openai llm proxy', a
         } 
     )
     console.log('llmProxyAnswer', {llmProxyAnswer})
+    window.codioIDE.coachBot.write('json result in console log')
+    window.codioIDE.coachBot.hideThinkingAnimation()
 
     setTimeout(() => {
       window.codioIDE.coachBot.showMenu()
