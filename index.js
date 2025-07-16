@@ -90,7 +90,7 @@ window.codioIDE.coachBot.register('showllmproxydetails', 'show llm proxy details
 
 window.codioIDE.coachBot.register('askopenaillmproxy', 'ask Openai llm proxy', async () => {
     window.codioIDE.coachBot.showThinkingAnimation()
-    await new Promise(r => setTimeout(r, 1000));
+    await new Promise(r => setTimeout(r, 500));
     window.codioIDE.coachBot.hideThinkingAnimation()
     const input = await window.codioIDE.coachBot.input('please type hook name')
     window.codioIDE.coachBot.showThinkingAnimation()
@@ -113,13 +113,25 @@ window.codioIDE.coachBot.register('askopenaillmproxy', 'ask Openai llm proxy', a
           }
         } 
     )
-    console.log('llmProxyAnswer', {llmProxyAnswer})
-    window.codioIDE.coachBot.write('json result in console log')
     window.codioIDE.coachBot.hideThinkingAnimation()
+    console.log('llmProxyAnswer', {llmProxyAnswer})
+    let stream = null
+    stream = await window.codioIDE.coachBot.writeStream()
+    text = llmProxyAnswer.result
+    const splitted = text.split(' ')
+    const writeAsStream = (arr, timeout) => {
+      if (!arr.length) {
+        stream.end()
+        setTimeout(() => {
+            window.codioIDE.coachBot.showMenu()
+        }, 3000)
+        return
+      }
+      stream.write(`${arr.shift()} `)
+      setTimeout(() => writeAsStream(arr, timeout), timeout)
+    }
+    writeAsStream(splitted, 50)
 
-    setTimeout(() => {
-      window.codioIDE.coachBot.showMenu()
-    }, 3000)
 })
 
 window.codioIDE.coachBot.register('askanthropicllmproxy', 'ask Anthropic llm proxy', async () => {
