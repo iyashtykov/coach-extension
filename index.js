@@ -48,7 +48,8 @@ window.codioIDE.coachBot.register('analyseBtnId', 'Analyse history and what next
   console.log(messages)
   let currentMessageRole = window.codioIDE.coachBot.MESSAGE_ROLES.ASSISTANT // initial value to get next message with role "USER"
   const messagesToSend = messages.reduce((acc, message) => {
-    if (message.role !== currentMessageRole) {
+    const hasContent = message.content && message.content.trim().length > 0;  
+    if (hasContent && message.role !== currentMessageRole) {
       acc.push(message)
       currentMessageRole = message.role
     }
