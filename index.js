@@ -1,4 +1,4 @@
-window.codioIDE.coachBot.register('level1button', 'level1 button!!!', () => {
+window.codioIDE.coachBot.register('level1button', 'level1 button', () => {
     window.codioIDE.coachBot.showButton('level2 input', async () => {
         const input = await window.codioIDE.coachBot.input('enter hook name')
         window.codioIDE.coachBot.write('Please wait in level2...')
